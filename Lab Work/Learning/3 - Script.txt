@@ -1,0 +1,56 @@
+
+File 1
+---- Router 0
+en
+	conf t
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-1	
+			net 192.168.1.0 255.255.255.0
+			de 192.168.1.1
+			dns 192.168.1.101
+File 2 & 3
+---- Router 1
+en
+	conf t
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+---- Server (DHCP)	
+	Manual Settings
+		IP Setting
+			IP 192.168.1.100
+			SUBNET 255.255.255.0
+			DEFAULT 192.168.1.1
+		Services
+			DHCP
+				On
+				Pool 		serverPool	
+				DEFAULT 	192.168.1.1
+				Start Ip 	192 158 1 0
+				Subnet 		255 255 255 0
+File 3 & 1
+---- Server (DNS)
+	Manual Settings
+		IP Setting
+			IP 192.168.1.101
+			SUBNET 255.255.255.0
+			DEFAULT 192.168.1.1
+		Services
+			DNS
+				On
+				Name hello.com
+				address 192.168.1.101
+				Type A
+		
+			
+
+File 1 DHCP Through Router
+File 2 DHCP Through Server
+File 3 DHCP DNS
+--- DHCP Dynamic Host Configuration Protocol
+--- DNS Domain Name Service
+	
