@@ -1,0 +1,78 @@
+VTP - Vlan Trunk Protocol
+
+Modes ->
+	Server -> For all
+	Client -> No changes
+	Transparent -> For It's self
+
+Place 4 switces
+
+Connnect 0 -> 1 -> 2 -> 3
+
+
+-- Switch 0
+en
+	conf t
+		vtp d Arose1
+		in fa 0/1
+			swi mo trunk
+			ex
+		vlan 2
+			name arose
+			ex
+		in range fa 0/10 - 20
+			sw mode acc
+			sw acc vlan 2
+			ex
+		ex
+	ex
+	
+-- Switch 1
+en
+	conf t
+		in fa 0/2
+			swi mo trunk
+			ex
+		in range fa 0/10 - 20
+			sw mode acc
+			sw acc vlan 2
+			ex
+		ex
+	ex
+	
+-- Switch 2
+en
+	conf t
+		in fa 0/2
+			swi mo trunk
+			ex
+		in range fa 0/10 - 20
+			sw mode acc
+			sw acc vlan 2
+			ex
+		vtp mo client
+		ex
+	ex
+-- Switch 3
+en 
+	conf t
+		vtp mo transparent
+		vlan 3
+			name myprivatezone
+			ex
+		in range fa 0/21 - 24
+			sw mode acc
+			sw acc vlan 2
+			ex
+			
+---
+
+Now let's add PC's/Laptops to each VLAN's each Switch.
+Then add 1 Server to VLAN 1 -> Static IP 192.168.1.100 Enable DHCP service on it.
+Apply DHCP on ALL PC's.
+
+Add 1 Server to VLAN 2 -> Static IP 192.168.2.100 Enable DHCP service on it.
+Apply DHCP on ALL PC's.
+
+Give static IP's to PC's in VLAN 3
+	192.168.3.x
