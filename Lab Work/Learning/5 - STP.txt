@@ -1,0 +1,19 @@
+STP - Spanning Tree Protocol
+
+Place 4 switches.
+Attach Laptops/PC with each switches.
+Connect switches with each other.
+Create Server connect it with 1 switch, give it IP 192.168.1.100.
+Goto Services enable the DHCP.
+
+
+Now to test STP
+Join each routers with multiple wires.
+
+STP is enabled by default to disabled
+
+-- switch
+en
+	conf t
+		no spa vlan 1
+		
