@@ -1,0 +1,197 @@
+-- Router 0
+en
+	conf t
+		in se 2/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		in se 3/0
+			ip ad 192.168.2.1 255.255.255.0
+			no sh
+			ex
+		in fa 0/0
+			ip ad 192.168.3.1 255.255.255.0
+			no sh
+			ex
+		in fa 1/0
+			ip ad 192.168.4.1 255.255.255.0
+			no sh
+			ex
+		rou eigrp 1
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			net 192.168.6.0
+			net 192.168.7.0
+			net 192.168.8.0
+			net 192.168.9.0
+			ex
+		ex
+		
+-- Router 1
+en
+	conf t
+		in se 2/0
+			ip ad 192.168.1.2 255.255.255.0
+			no sh
+			ex
+		in se 3/0
+			ip ad 192.168.5.1 255.255.255.0
+			no sh
+			ex
+		in fa 0/0
+			ip ad 192.168.6.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-1	
+			net 192.168.6.0 255.255.255.0
+			de 192.168.6.1
+			dns 192.168.4.100
+		rou eigrp 1
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			net 192.168.6.0
+			net 192.168.7.0
+			net 192.168.8.0
+			net 192.168.9.0
+			ex
+		ex
+-- Router 2
+en
+	conf t
+		in se 2/0
+			ip ad 192.168.2.2 255.255.255.0
+			no sh
+			ex
+		in se 3/0
+			ip ad 192.168.5.1 255.255.255.0
+			no sh
+			ex
+		in fa 0/0
+			ip ad 192.168.8.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-2	
+			net 192.168.8.0 255.255.255.0
+			de 192.168.8.1
+			dns 192.168.4.100
+		rou eigrp 1
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			net 192.168.6.0
+			net 192.168.7.0
+			net 192.168.8.0
+			net 192.168.9.0
+			ex
+		ex
+-- Router 3
+en
+	conf t
+		in se 2/0
+			ip ad 192.168.5.3 255.255.255.0
+			no sh
+			ex
+		in se 3/0
+			ip ad 192.168.5.2 255.255.255.0
+			no sh
+			ex
+		in fa 0/0
+			ip ad 192.168.7.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-3	
+			net 192.168.7.0 255.255.255.0
+			de 192.168.7.1
+			dns 192.168.4.100
+		rou eigrp 1
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			net 192.168.6.0
+			net 192.168.7.0
+			net 192.168.8.0
+			net 192.168.9.0
+			ex
+		ex
+-- Router 4
+en
+	conf t
+		in fa 0/0
+			ip ad 192.168.3.2 255.255.255.0
+			no sh
+			ex
+		in fa 0/1
+			ip ad 192.168.9.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-4
+			net 192.168.9.0 255.255.255.0
+			de 192.168.9.1
+			dns 192.168.4.100
+			opt 150 ip 192.168.9.1
+			ex
+		rou eigrp 1
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			net 192.168.6.0
+			net 192.168.7.0
+			net 192.168.8.0
+			net 192.168.9.0
+			ex
+		te
+			max-dn 3
+			max-e 3
+			ip s 192.168.9.1 port 2000
+			auto as 1 to 9
+			ex
+		ephone-dn 1
+			number 01
+			ex
+		ephone-dn 2
+			number 02
+			ex
+		ephone-dn 3
+			number 03
+			ex
+-- Switch Phone
+en
+	conf t
+		in range fa 0/2 - 4
+			sw mode acc
+			sw voice vlan 1
+			ex
+			
+-- Switch 0
+en
+	conf t
+		vtp d Arose-Niazi
+		in fa 0/1
+			swi mo trunk
+			ex
+		vlan 2
+			name Arose
+			ex
+-- Switch 1
+en
+	conf t
+		in fa 0/2
+			swi mo trunk
+			ex
+		vtp mode transparent
+-- Switch 1
+en
+	conf t
+		vtp mode client
