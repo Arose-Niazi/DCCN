@@ -1,0 +1,48 @@
+VOIP
+
+MUST USE ROUTER -> 2811
+
+
+Place Router
+Place Switch
+Place 4 IP's Phones.
+
+-- Router
+en
+	conf t
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool voice	
+			net 192.168.1.0 255.255.255.0
+			de 192.168.1.1
+			dns 192.168.1.100
+			opt 150 ip 192.168.1.1
+			ex
+		te
+			max-dn 4
+			max-e 4
+			ip s 192.168.1.1 port 2000
+			auto as 1 to 9
+			ex
+		ephone-dn 1
+			number 01
+			ex
+		ephone-dn 2
+			number 02
+			ex
+		ephone-dn 3
+			number 03
+			ex
+		ephone-dn 4
+			number 04
+			ex
+		
+-- Switch
+en
+	conf t
+		in range fa 0/2 - 5
+			sw mode acc
+			sw voice vlan 1
+			ex
