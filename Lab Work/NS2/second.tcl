@@ -67,13 +67,12 @@ proc finish {} {
 	close $nf
 	close $f0
 	close $f1
-	exec nam o.nam &
-	exec xgraph out0.tr out1.tr - geometry 640x320 &
+	exec nam o.nam
+	exec xgraph -color blue out0.tr -color orange out1.tr
 	exit 0
 }
 
 $ns at 0.0 "traffic"
-$ns at 20.0 "traffic stop"
 
 $ns at 0.1 "$cbr0 start"
 $ns at 19.0 "$cbr0 stop"

@@ -45,7 +45,7 @@ proc finish {} {
 	global ns nf
 	$ns flush-trace
 	close $nf
-	exec nam o.nam &
+	exec nam o.nam
 	exit 0
 }
 
