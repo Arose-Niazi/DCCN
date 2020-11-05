@@ -37,7 +37,7 @@ $n5 label "UDP Sender"
 $n0 color blue
 $n1 color orange
 $n2 color pink
-$n4 color rRed
+$n4 color red
 $n5 color green
 
 #Creating links between nodes
