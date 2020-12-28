@@ -1,0 +1,99 @@
+en
+	conf t
+		hostname R1
+		
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+			
+		in se 2/0
+			ip ad 10.0.1.1 255.0.0.0
+			no sh
+			ex
+		
+		rou rip
+			net 192.168.1.1
+			net 10.0.1.0
+			ex
+			
+		in se 2/0
+			encap fra
+			........
+			fra map ip 10.0.1.2 102 broadcast
+			fra map ip 10.0.1.3 103 broadcast
+			.......
+			int se 2.0.102 point-to-point
+				ip 10.0.1.1 255.0.0.0
+				fra interface-dlci 102
+				ex
+			int se 2.0.103 point-to-point
+				ip 10.0.2.1 255.0.0.0
+				fra interface-dlci 103
+			
+			
+en
+	conf t
+		hostname R2
+		
+		in fa 0/0
+			ip ad 192.168.2.1 255.255.255.0
+			no sh
+			ex
+			
+		in se 2/0
+			ip ad 10.0.1.2 255.0.0.0
+			no sh
+			ex
+			
+		rou rip
+			net 192.168.2.1
+			net 10.0.1.0
+			ex
+		
+		in se 2/0
+			encap fra
+			.......
+			fra map ip 10.0.1.1 201 broadcast
+			fra map ip 10.0.1.3 203 broadcast
+			.......
+			int se 2.0.201 point-to-point
+				ip 10.0.1.2 255.0.0.0
+				fra interface-dlci 201
+				ex
+			int se 2.0.203 point-to-point
+				ip 10.0.3.1 255.0.0.0
+				fra interface-dlci 203
+
+en
+	conf t
+		hostname R3
+		
+		in fa 0/0
+			ip ad 192.168.3.1 255.255.255.0
+			no sh
+			ex
+			
+		in se 2/0
+			ip ad 10.0.1.3 255.0.0.0
+			no sh
+			ex
+		
+		rou rip
+			net 192.168.3.1
+			net 10.0.1.0
+			ex
+		
+		in se 2/0
+			encap fra
+			....
+			fra map ip 10.0.1.1 301 broadcast
+			fra map ip 10.0.1.2 302 broadcast
+			.......
+			int se 2.0.301 point-to-point
+				ip 10.0.2.2 255.0.0.0
+				fra interface-dlci 301
+				ex
+			int se 2.0.302 point-to-point
+				ip 10.0.3.2 255.0.0.0
+				fra interface-dlci 302

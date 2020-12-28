@@ -1,0 +1,58 @@
+en 
+	conf t
+		hostname R1
+		
+		in fa 0/0
+			ip ad 172.16.1.1 255.255.0.0
+			no sh
+			ex
+			
+		in se 2/0
+			ip ad 10.0.1.1 255.0.0.0
+			no sh
+			ex
+		
+		rou rip
+			net 172.16.1.0
+			net 10.0.1.0
+			net 192.168.1.0
+			ex
+		username R2 password cisco
+		
+		in se 2/0
+			encap ppp
+			----- CHAP
+			ppp aut chap
+			----- PAP
+			ppp aut pap
+			ppp pap sent-username R1 password cisco
+		
+en 
+	conf t
+		hostname R2
+		
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+			
+		in se 2/0
+			ip ad 10.0.1.2 255.0.0.0
+			no sh
+			ex
+		
+		rou rip
+			net 172.16.1.0
+			net 10.0.1.0
+			net 192.168.1.0
+			ex
+		
+		username R1 password cisco
+		
+		in se 2/0
+			encap ppp
+			----- CHAP
+			ppp aut chap
+			----- PAP
+			ppp aut pap
+			ppp pap sent-username R2 password cisco
