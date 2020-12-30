@@ -1,0 +1,76 @@
+-- Switch 
+en
+	config t
+		vlan 2
+			name V1
+			ex
+			
+		in range fa 0/2 - 6
+			sw mode acc
+			sw acc vlan 2
+			ex
+		vlan 3
+			name V2
+			ex
+			
+		in range fa 0/7 - 11
+			sw mode acc
+			sw acc vlan 3
+			ex
+		vlan 4
+			name V3
+			ex
+			
+		in range fa 0/12 - 16
+			sw mode acc
+			sw acc vlan 4
+			ex
+		vlan 5
+			name V4
+			ex
+			
+		in range fa 0/17 - 21
+			sw mode acc
+			sw acc vlan 5
+			ex
+        in fa 0/1
+            sw mode trunk
+
+-- Router
+en
+	conf t
+		int fa0/0
+			no shutdown
+			
+			int fa0/0.1
+				encapsulation dot1q 2
+				ip add 192.168.1.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-1	
+				net 192.168.1.0 255.255.255.0
+				de 192.168.1.1
+				
+				ex
+			int fa0/0.2
+				encapsulation dot1q 3
+				ip add 192.168.2.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-2	
+				net 192.168.2.0 255.255.255.0
+                de 192.168.2.1
+				
+			int fa0/0.3
+				encapsulation dot1q 4
+				ip add 192.168.3.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-3	
+				net 192.168.3.0 255.255.255.0
+				de 192.168.3.1
+
+			int fa0/0.4
+				encapsulation dot1q 5
+				ip add 192.168.4.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-4	
+				net 192.168.4.0 255.255.255.0
+				de 192.168.4.1
