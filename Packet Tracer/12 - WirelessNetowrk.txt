@@ -1,0 +1,51 @@
+-- Router 1
+en
+	conf t
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-1	
+			net 192.168.1.0 255.255.255.0
+			de 192.168.1.1
+            ex
+        in se 2/0
+            ip ad 192.168.2.1 255.255.255.0
+			no sh
+			ex
+        ex
+    rou rip
+        net 192.168.1.0
+        net 192.168.2.0
+        net 192.168.3.0
+        net 192.168.4.0
+
+-- Router 2
+en
+	conf t
+		in fa 1/0
+			ip ad 192.168.3.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-3	
+			net 192.168.3.0 255.255.255.0
+			de 192.168.3.1
+            ex
+        in se 2/0
+            ip ad 192.168.2.2 255.255.255.0
+			no sh
+			ex
+        in fa 0/0
+			ip ad 192.168.4.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-4	
+			net 192.168.4.0 255.255.255.0
+			de 192.168.4.1
+            ex
+        ex
+    rou rip
+        net 192.168.1.0
+        net 192.168.2.0
+        net 192.168.3.0
+        net 192.168.4.0
