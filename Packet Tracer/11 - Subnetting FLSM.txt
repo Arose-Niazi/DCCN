@@ -1,0 +1,60 @@
+-- Router 1
+en
+	conf t
+		in fa 0/0
+			ip ad 156.16.0.1 255.255.255.128
+			no sh
+			ex
+        in se 2/0
+            ip ad 156.16.0.129 255.255.255.128
+            no sh
+            ex
+		ip dhcp pool FA18-BSE-010-1	
+			net 156.16.0.0 255.255.255.128
+			de 156.16.0.1
+            ex
+        ex
+        rou rip
+			net 156.16.0.0
+            ex
+
+
+-- Router 2
+en
+	conf t
+		in fa 0/0
+			ip ad 156.16.1.1 255.255.255.128
+			no sh
+			ex
+        in se 2/0
+            ip ad 156.16.0.130 255.255.255.128
+            no sh
+            ex
+        in se 3/0
+            ip ad 156.16.2.1 255.255.255.128
+            no sh
+            ex
+		ip dhcp pool FA18-BSE-010-2	
+			net 156.16.1.0 255.255.255.128
+			de 156.16.1.1
+        rou rip
+			net 156.16.0.0
+            ex
+
+-- Router 3
+en
+	conf t
+		in fa 0/0
+			ip ad 156.16.1.129 255.255.255.128
+			no sh
+			ex
+        in se 3/0
+            ip ad 156.16.2.2 255.255.255.128
+            no sh
+            ex
+		ip dhcp pool FA18-BSE-010-3	
+			net 156.16.1.128 255.255.255.128
+			de 156.16.1.129
+        rou rip
+			net 156.16.0.0
+            ex
