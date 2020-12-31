@@ -1,0 +1,96 @@
+en 
+	conf t
+		hostname rimsha
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18.1
+			net 192.168.1.0 255.255.255.0
+			de 192.168.1.1
+      		ex
+      	in se 2/0
+      	ip ad 192.168.2.1 255.255.255.0
+			no sh
+			ex
+		rou rip
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			ex
+		username arif password 1234
+		username arose password abcd
+		in se 2/0
+			encap ppp
+			ppp aut pap
+			ppp pap sent-username rimsha password helloBC
+		
+en 
+	conf t
+		hostname arif	
+		in fa 0/0
+			ip ad 192.168.3.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18.2
+			net 192.168.3.0 255.255.255.0
+			de 192.168.3.1
+      		ex
+    	in se 2/0
+      		ip ad 192.168.2.2 255.255.255.0
+			no sh
+			ex
+		in se 3/0
+      		ip ad 192.168.4.2 255.255.255.0
+			no sh
+			ex
+		rou rip
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			ex
+
+		username rimsha password helloBC
+		username arose password abcd
+		in se 2/0
+			encap ppp
+			ppp aut pap
+			ppp pap sent-username arif password 1234
+		in se 3/0
+			encap ppp
+			ppp aut pap
+			ppp pap sent-username arif password 1234
+
+en 
+	conf t
+		hostname arose	
+		in fa 0/0
+			ip ad 192.168.5.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18.5
+			net 192.168.5.0 255.255.255.0
+			de 192.168.5.1
+      		ex
+    	in se 2/0
+      		ip ad 192.168.4.1 255.255.255.0
+			no sh
+			ex
+		rou rip
+			net 192.168.1.0
+			net 192.168.2.0
+			net 192.168.3.0
+			net 192.168.4.0
+			net 192.168.5.0
+			ex
+
+		username rimsha password helloBC
+		username arif password 1234
+		in se 2/0
+			encap ppp
+			ppp aut pap
+			ppp pap sent-username arose password abcd
