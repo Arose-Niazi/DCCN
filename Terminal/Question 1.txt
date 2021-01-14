@@ -1,0 +1,124 @@
+-- Switch 2
+en
+	config t
+		vlan 10
+			name Vlan1
+			ex
+		in range fa 0/2 - 3
+			sw mode acc
+			sw acc vlan 10
+			ex
+		vlan 20
+			name Vlan2
+			ex
+		in range fa 0/4 - 5
+			sw mode acc
+			sw acc vlan 20
+			ex
+        in fa 0/1
+            sw mode trunk
+-- Router 1
+en
+	conf t
+        hostname R1
+		in fa 0/0
+			ip ad 192.168.1.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-1	
+			net 192.168.1.0 255.255.255.0
+			de 192.168.1.1
+            ex
+        in se 2/0
+			ip ad 192.168.4.1 255.255.255.0
+			no sh
+            encap fra
+			fra map ip 192.168.4.2 102 broadcast
+			fra map ip 192.168.4.3 103 broadcast
+			ex
+
+        rou rip
+            net 192.168.1.0
+            net 192.168.2.0
+            net 192.168.3.0
+            net 192.168.4.0
+            net 192.168.5.0
+            net 192.168.6.0
+
+
+-- Router 2
+en
+	conf t
+        hostname R2
+		int fa0/0
+			no shutdown
+			
+			int fa0/0.2
+				encapsulation dot1q 10
+				ip add 192.168.2.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-2	
+				net 192.168.2.0 255.255.255.0
+				de 192.168.2.1
+				ex
+			int fa0/0.3
+				encapsulation dot1q 20
+				ip add 192.168.3.1 255.255.255.0
+				no shutdown
+				ip dhcp pool FA18-BSE-010-3	
+				net 192.168.3.0 255.255.255.0
+                de 192.168.3.1
+                ex
+        in se 2/0
+			ip ad 192.168.4.2 255.255.255.0
+			no sh
+            encap fra
+			fra map ip 192.168.4.1 201 broadcast
+			fra map ip 192.168.4.3 203 broadcast
+			ex
+
+        rou rip
+            net 192.168.1.0
+            net 192.168.2.0
+            net 192.168.3.0
+            net 192.168.4.0
+            net 192.168.5.0
+            net 192.168.6.0
+
+-- Router 3
+en
+	conf t
+        hostname R3
+		in fa 0/0
+			ip ad 192.168.5.1 255.255.255.0
+			no sh
+			ex
+		ip dhcp pool FA18-BSE-010-5	
+			net 192.168.5.0 255.255.255.0
+			de 192.168.5.1
+            ex
+        in fa 1/0
+			ip ad 192.168.6.1 255.255.255.0
+			no sh
+			ex
+        ip dhcp pool FA18-BSE-010-6	
+			net 192.168.6.0 255.255.255.0
+			de 192.168.6.1
+            ex
+        in se 2/0
+			ip ad 192.168.4.3 255.255.255.0
+			no sh
+            encap fra
+			fra map ip 192.168.4.1 301 broadcast
+			fra map ip 192.168.4.2 302 broadcast
+			ex
+
+       rou rip
+            net 192.168.1.0
+            net 192.168.2.0
+            net 192.168.3.0
+            net 192.168.4.0
+            net 192.168.5.0
+            net 192.168.6.0
+
+
