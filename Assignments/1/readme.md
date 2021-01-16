@@ -1,4 +1,7 @@
---- Router 0
+# Assignment 3
+![Image](https://github.com/Arose-Niazi/DCCN/tree/New-Structure/Assignments/1.png?raw=true)
+# Router 0 Commands
+```
 en
 	conf t
 		in se 2/0
@@ -26,7 +29,9 @@ en
 			net 192.168.6.0
 			net 192.168.7.0
 			ex
---- Router 1
+```
+# Router 1 Commands
+```
 en
 	conf t
 		in se 2/0
@@ -51,7 +56,9 @@ en
 			net 192.168.6.0
 			net 192.168.7.0
 			ex
---- Router 2
+```
+# Router 2 Commands
+```
 en
 	conf t
 		in fa 0/0
@@ -76,7 +83,9 @@ en
 			net 192.168.6.0
 			net 192.168.7.0
 			ex
---- Router 3
+```
+# Router 3 Commands
+```
 en
 	conf t
 		in se 2/0
@@ -101,3 +110,4 @@ en
 			net 192.168.6.0
 			net 192.168.7.0
 			ex
+```
