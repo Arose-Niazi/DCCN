@@ -16,4 +16,4 @@
 ### Note
 - Check the closed issues for questions. 
 - All my files are available here.
-- Please use these as learning purpose only, don't copy paste it as your assignments. 
+- Please use these for learning purpose only, don't copy-paste them as your assignments. 
